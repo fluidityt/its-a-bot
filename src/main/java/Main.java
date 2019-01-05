@@ -11,6 +11,11 @@ import net.dv8tion.jda.core.requests.restaction.MessageAction;
 
 import java.util.List;
 
+// .....
+// here is the test channel
+// https://discord.gg/vzVmCX
+// ......
+
 public class Main extends ListenerAdapter {
 
     private static JDABuilder builder;
@@ -30,111 +35,129 @@ public class Main extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
 
+// some stuff:
         Guild guild = event.getGuild();
-        MessageChannel channel = event.getChannel();
-        GuildController gController = event.getTextChannel().getGuild().getController();
-        String author = event.getAuthor().getName();
-        String message = event.getMessage().getContentRaw();
+        GuildController gController = guild.getController();
         List<Member> members = guild.getMembers();
 
-        //https://discord.gg/vzVmCX
+        JDA jda = event.getJDA();
 
+        MessageChannel channel = event.getChannel();
+
+        String author = event.getAuthor().getName();
+        String message = event.getMessage().getContentRaw();
+        Member member = event.getMember();
+
+// playing:
         switch (message) {
-/*            case "!playing":
+         /*
+            case "!playing":
                 //getPresence.setGame(Game.playing("God")); break;
             case "!stopplaying":
-                builder.setGame(Game.playing("nothing")); break;*/
+                builder.setGame(Game.playing("nothing")); break;
+        */
 
+
+// grizzifier:
             case "!gryzify":
-
                 for (Member mem : members) {
                     String oldName = mem.getUser().getName();
                     if (oldName.contains("fluidityZ")) {}
                     else { gController.setNickname(mem, "Gryz").complete(); }
                 }
-                event.getChannel().sendMessage("Gryz'd!").queue();
+                channel.sendMessage("Gryz'd!").queue();
                 break;
 
             case "!degryz":
-
                 for (Member mem : members) {
                     String oldName = mem.getUser().getName();
                     if (oldName.contains("fluidityZ")) {}
                     else { gController.setNickname(mem, oldName).complete(); }
                 }
-                event.getChannel().sendMessage("DeGryz'd").queue();
+               channel.sendMessage("DeGryz'd").queue();
                 break;
 
-            case "!game":
+// roles:
+            case "!roled":
+
+                String desiredName = "rolespam";
+
+                if (channel.getName().equals(desiredName)) {
+                   gController.addRolesToMember(member, jda.getRolesByName("Roll", true)).queue();
+                   channel.sendMessage("Roll'd").queue();
+                } else {
+                    channel.sendMessage("not in > " + desiredName + " < channel!").queue();
+                   // channel.sendMessage("DEBUG: currently in channel: " + channel.getName()).queue();
+                }
+
                 break;
+
+
 // members
 
             case "!river":
-                event.getChannel().sendMessage("is THE SUPER BESTEST.").queue(); break;
+                channel.sendMessage("is THE SUPER BESTEST.").queue(); break;
             case "!kalek":
-                event.getChannel().sendMessage("... is less gay that Dim, since Dim has 2 less children.").queue();break;
+                channel.sendMessage("... is less gay that Dim, since Dim has 2 less children.").queue();break;
             case "!riot":
-                event.getChannel().sendMessage("YOU ARE NOT WELCOME HERE!!!").queue();break;
+                channel.sendMessage("YOU ARE NOT WELCOME HERE!!!").queue();break;
             case "!gryz":
-                event.getChannel().sendMessage("*~-~I'm already Gryz~-~*").queue();break;
+                channel.sendMessage("*~-~I'm already Gryz~-~*").queue();break;
             case "!neos":
-                event.getChannel().sendMessage("What's a D1?").queue();break;
+                channel.sendMessage("What's a D1?").queue();break;
             case "!cuck":
-                event.getChannel().sendMessage("<this message has been censored>").queue();break;
+                channel.sendMessage("<this message has been censored>").queue();break;
             case "!emblem":
-                event.getChannel().sendMessage("*Hey I just Q'd up, and this is crazy, but now I'm Master! So YoLo BaBy!*").queue();break;
+                channel.sendMessage("*Hey I just Q'd up, and this is crazy, but now I'm Master! So YoLo BaBy!*").queue();break;
             case "!ant":
-                event.getChannel().sendMessage("... tf outta' here we already have a dragon").queue();break;
+                channel.sendMessage("... tf outta' here we already have a dragon").queue();break;
             case "!owen":
-                event.getChannel().sendMessage("guys\nlisten\nwe\ndon't\ntalk\nto\nowen").queue();break;
+                channel.sendMessage("guys\nlisten\nwe\ndon't\ntalk\nto\nowen").queue();break;
             case "!fluid":
-                event.getChannel().sendMessage("*~-~ Ur Supp Main ~-~*").queue(); break;
+                channel.sendMessage("*~-~ Ur Supp Main ~-~*").queue(); break;
             case "!nerple":
-                event.getChannel().sendMessage("..*Wants his, baby-back, baby-back~~*").queue(); break;
+                channel.sendMessage("..*Wants his, baby-back, baby-back~~*").queue(); break;
             case "!skrub":
-                event.getChannel().sendMessage("...*He's gone... (until Jan 11)*").queue(); break;
+                channel.sendMessage("...*He's gone... (until Jan 11)*").queue(); break;
             case "!xeno":
-                event.getChannel().sendMessage("acetoacetatedeoxyribonucelicpyruvatepyrimdineoxidativephosphorylation\nsaying that is as hard as playing Vivian!").queue(); break;
+                channel.sendMessage("acetoacetatedeoxyribonucelicpyruvatepyrimdineoxidativephosphorylation\nsaying that is as hard as playing Vivian!").queue(); break;
             case "!furia":
-                event.getChannel().sendMessage("Doesn't need a bot to speak for her ;]").queue(); break;
+                channel.sendMessage("Doesn't need a bot to speak for her ;]").queue(); break;
             case "!suicidols":
-                event.getChannel().sendMessage("Essence rip META!").queue(); break;
+                channel.sendMessage("Essence rip META!").queue(); break;
             case "!neos2":
-                event.getChannel().sendMessage("**Down with the resistance!**").queue(); break;
-
+                channel.sendMessage("**Down with the resistance!**").queue(); break;
 
 
 
 // RPS:
             case "!scissors":
-                event.getChannel().sendMessage("Rock!! I win again, " + author).queue();break;
+                channel.sendMessage("Rock!! I win again, " + author).queue();break;
             case "!rock":
-                event.getChannel().sendMessage("Paper!! I win again, " + author).queue();break;
+                channel.sendMessage("Paper!! I win again, " + author).queue();break;
             case "!paper":
-                event.getChannel().sendMessage("Scissors!! I win again, " + author).queue();break;
-        }
-        // random
+                channel.sendMessage("Scissors!! I win again, " + author).queue();break;
+
+        } // /switch
+
+// random
 
         if(message.contains("willow") || message.contains("Willow") )  {
-            event.getChannel().sendMessage("Willo*").queue();
+            channel.sendMessage("Willo*").queue();
         } else
 
         if(message.equals("!gword")) {
-            event.getChannel().sendMessage("shut up, breeder... You're the big straight, " + author + ", not fabulous at all").queue();
+            channel.sendMessage("shut up, breeder... You're the big straight, " + author + ", not fabulous at all").queue();
         } else
 
         if(message.equals("!riversucks")) {
-            event.getChannel().sendMessage("HOW DARE YOU SAY THAT ABOUT HIM!!! " + author).queue();
+            channel.sendMessage("HOW DARE YOU SAY THAT ABOUT HIM!!! " + author).queue();
         } else
 
         if(message.equals("!randomchamp")) {
-            event.getChannel().sendMessage("Furia!! Again? Whatter the odds?").queue();
+            channel.sendMessage("Furia!! Again? Whatter the odds?").queue();
         }
 
 
-    } // end
-
-
-
-
+    } // /onMessageReceived
 }
