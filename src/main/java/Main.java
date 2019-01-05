@@ -93,7 +93,7 @@ public class Main extends ListenerAdapter {
                 break;
 
 
-// members
+// members:
 
             case "!river":
                 channel.sendMessage("is THE SUPER BESTEST.").queue(); break;
