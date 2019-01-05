@@ -1,18 +1,28 @@
 import jdk.nashorn.internal.objects.annotations.Function;
 import net.dv8tion.jda.core.AccountType;
-        import net.dv8tion.jda.core.JDABuilder;
-        import net.dv8tion.jda.core.hooks.ListenerAdapter;
-        import javax.security.auth.login.LoginException;
-        import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import javax.security.auth.login.LoginException;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.managers.GuildController;
 import net.dv8tion.jda.core.requests.restaction.MessageAction;
 
+import java.util.List;
+
 public class Main extends ListenerAdapter {
+
+    private static JDABuilder builder;
+
     public static void main(String[] args) throws javax.security.auth.login.LoginException {
-        JDABuilder builder = new JDABuilder(AccountType.BOT);
+
+        builder = new JDABuilder(AccountType.BOT);
         builder.setToken("NTI3NDk5MDQwOTU1MzAxOTA5.DwUnwA.ILk6oQwUsQnssMTTu2WRYjxRqzc");
         builder.addEventListener(new Main());
         builder.buildAsync();
-
+        //  builder.setGame(Game.playing("God"));
+        Cat kitty = new Cat();
     }
 
 
@@ -20,12 +30,45 @@ public class Main extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
 
+        Guild guild = event.getGuild();
+        MessageChannel channel = event.getChannel();
+        GuildController gController = event.getTextChannel().getGuild().getController();
         String author = event.getAuthor().getName();
         String message = event.getMessage().getContentRaw();
+        List<Member> members = guild.getMembers();
+
         //https://discord.gg/vzVmCX
-        // members
 
         switch (message) {
+/*            case "!playing":
+                //getPresence.setGame(Game.playing("God")); break;
+            case "!stopplaying":
+                builder.setGame(Game.playing("nothing")); break;*/
+
+            case "!gryzify":
+
+                for (Member mem : members) {
+                    String oldName = mem.getUser().getName();
+                    if (oldName.contains("fluidityZ")) {}
+                    else { gController.setNickname(mem, "Gryz").complete(); }
+                }
+                event.getChannel().sendMessage("Gryz'd!").queue();
+                break;
+
+            case "!degryz":
+
+                for (Member mem : members) {
+                    String oldName = mem.getUser().getName();
+                    if (oldName.contains("fluidityZ")) {}
+                    else { gController.setNickname(mem, oldName).complete(); }
+                }
+                event.getChannel().sendMessage("DeGryz'd").queue();
+                break;
+
+            case "!game":
+                break;
+// members
+
             case "!river":
                 event.getChannel().sendMessage("is THE SUPER BESTEST.").queue(); break;
             case "!kalek":
@@ -34,6 +77,8 @@ public class Main extends ListenerAdapter {
                 event.getChannel().sendMessage("YOU ARE NOT WELCOME HERE!!!").queue();break;
             case "!gryz":
                 event.getChannel().sendMessage("*~-~I'm already Gryz~-~*").queue();break;
+            case "!neos":
+                event.getChannel().sendMessage("What's a D1?").queue();break;
             case "!cuck":
                 event.getChannel().sendMessage("<this message has been censored>").queue();break;
             case "!emblem":
@@ -54,17 +99,17 @@ public class Main extends ListenerAdapter {
                 event.getChannel().sendMessage("Doesn't need a bot to speak for her ;]").queue(); break;
             case "!suicidols":
                 event.getChannel().sendMessage("Essence rip META!").queue(); break;
-            case "!neos":
+            case "!neos2":
                 event.getChannel().sendMessage("**Down with the resistance!**").queue(); break;
 
 
 
 
-            // RPS:
+// RPS:
             case "!scissors":
-            event.getChannel().sendMessage("Rock!! I win again, " + author).queue();break;
+                event.getChannel().sendMessage("Rock!! I win again, " + author).queue();break;
             case "!rock":
-            event.getChannel().sendMessage("Paper!! I win again, " + author).queue();break;
+                event.getChannel().sendMessage("Paper!! I win again, " + author).queue();break;
             case "!paper":
                 event.getChannel().sendMessage("Scissors!! I win again, " + author).queue();break;
         }
