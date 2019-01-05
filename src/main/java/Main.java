@@ -22,7 +22,7 @@ public class Main extends ListenerAdapter {
         builder.addEventListener(new Main());
         builder.buildAsync();
         //  builder.setGame(Game.playing("God"));
-        Cat kitty = new Cat();
+        // Cat kitty = new Cat();
     }
 
 
